@@ -1,11 +1,18 @@
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
+import UserCard from "../components/UserCard";
 import { BASE_URL } from "../utils/constants";
+import { addFeed } from "../utils/feedSlice";
 
 const Feed = () => {
+  const dispatch = useDispatch();
+
+  // const handleSendRequest = () => {};
   const fetchFeed = async () => {
+    // if (feed) return;
     const res = await axios.post(
       BASE_URL + "/user/feed",
       {},
@@ -14,40 +21,22 @@ const Feed = () => {
       }
     );
     console.log(res);
+    dispatch(addFeed(res?.data?.data));
   };
+  const feed = useSelector((store) => store.feed);
 
   useEffect(() => {
     fetchFeed();
   }, []);
+
+  if (!feed) return;
+
+  // if (feed.length <= 0)
+  //   return <h1 className="flex justify-center my-10">No new users founds!</h1>;
   return (
     <div>
       <Navbar />
-      <div className="card card-compact bg-base-100 w-96 shadow-xl">
-        <figure>
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="photo-url"
-          />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">Name</h2>
-          <p>Choose?</p>
-          <div className="card-actions justify-between">
-            <button
-              className="btn btn-primary"
-              onClick={() => handleSendRequest("ignored", "")}
-            >
-              Reject
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => handleSendRequest("interested", "")}
-            >
-              Accept
-            </button>
-          </div>
-        </div>
-      </div>
+      <UserCard feed={feed[0]} />;
     </div>
   );
 };
