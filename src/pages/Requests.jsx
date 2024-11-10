@@ -25,7 +25,7 @@ const Requests = () => {
       {},
       { withCredentials: true }
     );
-
+    console.log("accept", res?.data);
     dispatch(removeRequest(reqId));
   };
 
@@ -60,7 +60,7 @@ const Requests = () => {
               const { _id, firstName, lastName, photoUrl, age, gender, about } =
                 req.fromUserId;
               return (
-                <tr key={req._id}>
+                <tr key={_id}>
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />

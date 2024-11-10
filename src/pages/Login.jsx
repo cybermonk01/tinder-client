@@ -34,49 +34,38 @@ const Login = () => {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await axios.post(
-      BASE_URL + "/auth/login",
-      { emailId, password },
-      { withCredentials: true }
-    );
+    try {
+      const res = await axios.post(
+        BASE_URL + "/auth/login",
+        { emailId, password },
+        { withCredentials: true }
+      );
 
-    const data = await res.data;
-    console.log(data);
-    dispatch(addUser(res.data.user));
-    navigate("/feed");
+      const data = await res.data;
+      console.log(data);
+      dispatch(addUser(res.data.user));
+      navigate("/feed");
+    } catch (err) {
+      console.log("error in login", err.message);
+    }
   };
 
   return (
     <div>
-      {/* <label className="input input-bordered flex items-center gap-2">
-        <input type="text" className="grow" placeholder="Search" />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="h-4 w-4 opacity-70"
-        >
-          <path
-            fillRule="evenodd"
-            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            clipRule="evenodd"
-          />
-        </svg>
-        
-      </label> */}
-
-      <div class="hero bg-base-200 min-h-screen">
-        <div class="hero-content flex-col lg:flex-row-reverse">
+      <div class="hero bg-base-200 min-h-screen bg-gray-900 flex justify-center items-center  bg-[url('https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp')]  opacity-75">
+        <div class="hero-content flex-col lg:flex-row-reverse mb-[180px] justify-center gap-20 mt-24">
           <div class="text-center lg:text-left">
-            <h1 class="text-5xl font-bold">Login now!</h1>
-            <p class="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+            <h1 class="text-5xl font-bold text-white z-1">
+              {isLogin ? "Login " : "Register "}now!
+            </h1>
+            <p class="py-6 text-white">
+              Keep sharing profile with other users.
+              <br></br>As an administrator, you can see who have send you
+              connection requests.
             </p>
           </div>
-          <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <form class="card-body">
+          <div class="card bg-gray-800 w-full max-w-sm shrink-0 shadow-2xl">
+            <form class="card-body ">
               {!isLogin && (
                 <>
                   <label className="input input-bordered flex items-center gap-2">
@@ -154,20 +143,24 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </label>
-
-              <p>
-                {isLogin ? "New , Signup Now!" : "Already a user, try login"}
-              </p>
+              <div className="flex justify-start items-start ">
+                <p className="grow-0 pr-2">
+                  {isLogin ? "New , Signup Now!" : "Already a user, try login"}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsLogin(!isLogin);
+                  }}
+                >
+                  {" "}
+                  {!isLogin ? "Login" : "Register"}
+                </button>
+              </div>
               <button
-                type="button"
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                }}
+                onClick={isLogin ? handleLogin : handleSignup}
+                className="bg-purple-950 font-bold text-lg border-inherit rounded-lg mt-5 py-2"
               >
-                {" "}
-                {!isLogin ? "Login" : "Register"}
-              </button>
-              <button onClick={isLogin ? handleLogin : handleSignup}>
                 {isLogin ? "Login" : "Register"}
               </button>
             </form>

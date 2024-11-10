@@ -20,13 +20,15 @@ const UserCard = ({ feed }) => {
   };
 
   return (
-    <div>
-      <div className="card card-compact bg-base-100 w-96 shadow-xl">
+    <div className="">
+      <div className="card card-compact bg-gray-900 w-80 my-10 shadow-xl">
         <figure>
-          <img src={feed?.photoUrl} alt="photo-url" />
+          <img src={feed?.photoUrl} alt="photo-url" className="" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{feed?.firstName}</h2>
+          <h2 className="card-title">
+            {feed?.firstName + " " + feed?.lastName}
+          </h2>
           <p>
             <span>{feed?.age} </span>| {feed?.about}
           </p>
@@ -35,13 +37,13 @@ const UserCard = ({ feed }) => {
               className="btn btn-primary"
               onClick={() => handleSendRequest("ignored", feed?._id)}
             >
-              Reject
+              Not Interested
             </button>
             <button
               className="btn btn-primary"
               onClick={() => handleSendRequest("interested", feed?._id)}
             >
-              Accept
+              Interested
             </button>
           </div>
         </div>

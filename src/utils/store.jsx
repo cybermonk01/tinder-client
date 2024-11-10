@@ -3,6 +3,7 @@ import userSlice from "./userSlice";
 import requestSlice from "./requestSlice";
 import connectionSlice from "./connectionSlice";
 import feedSlice from "./feedSlice";
+import skillSlice from "./skillSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     request: requestSlice,
     connection: connectionSlice,
     feed: feedSlice,
+    skill: skillSlice,
   },
 });
 

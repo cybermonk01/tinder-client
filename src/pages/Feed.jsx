@@ -31,12 +31,11 @@ const Feed = () => {
 
   if (!feed) return;
 
-  // if (feed.length <= 0)
-  //   return <h1 className="flex justify-center my-10">No new users founds!</h1>;
+  if (feed.length <= 0)
+    return <h1 className="flex justify-center my-10">No new users founds!</h1>;
   return (
-    <div>
-      <Navbar />
-      <UserCard feed={feed[0]} />;
+    <div className="flex justify-center">
+      <UserCard feed={feed[0]} />
     </div>
   );
 };
